@@ -1,0 +1,155 @@
+<!doctype html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="common/head :: head"></th:block>
+<body>
+
+	<th:block th:replace="common/menu :: menu"></th:block>
+	<th:block th:replace="common/header :: header"></th:block>
+	
+	
+		<!-- page title area start -->
+		<div class="page-title-area">
+			<div class="row align-items-center">
+				<div class="col-sm-6">
+					<div class="breadcrumbs-area clearfix">
+						<!-- <h4 class="page-title pull-left">Báº£ng Ä‘iá»�u khiá»ƒn</h4>  -->
+						<ul class="breadcrumbs pull-left ml-4">
+							<li><a href="#">Trang chủ</a></li>
+							<li><span>Bảng điều khiển</span></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-6 clearfix">
+					<div class="user-profile pull-right">
+						<h4 class="user-name dropdown-toggle" data-toggle="dropdown">
+							Huu Duan <i class="fa fa-angle-down"></i>
+						</h4>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="#">Message</a> <a
+								class="dropdown-item" href="#">Settings</a> <a
+								class="dropdown-item" href="#">Log Out</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="main-content-inner">
+	
+	<!-- page title area end -->
+	<div class="main-content-inner">
+		<!-- sales report area start -->
+		<div class="sales-report-area mt-5 mb-5">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="single-report mb-xs-30">
+						<div class="s-report-inner pr--20 pt--30 mb-3">
+							<div class="icon">
+								<i class="fa fa-cart-plus"></i>
+							</div>
+							<a th:href="@{/product/}">
+								<div class="s-report-title d-flex justify-content-between">
+									<h4 class="header-title mb-0" th:text="#{info.depart}">Sáº£n pháº©m</h4>
+									<p>5000</p>
+								</div>
+							</a>
+						</div>
+						<canvas id="coin_sales1" height="100"></canvas>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="single-report mb-xs-30">
+						<div class="s-report-inner pr--20 pt--30 mb-3">
+							<div class="icon">
+								<i class="fa fa-cart-plus"></i>
+							</div>
+							<a th:href="@{/product/}">
+								<div class="s-report-title d-flex justify-content-between">
+									<h4 class="header-title mb-0" th:text="#{info.record}">Sáº£n pháº©m</h4>
+									<p>5000</p>
+								</div>
+							</a>
+						</div>
+						<canvas id="coin_sales2" height="100"></canvas>
+					</div>
+				</div>
+				
+				<div class="col-md-4">
+					<div class="single-report mb-xs-30">
+						<div class="s-report-inner pr--20 pt--30 mb-3">
+							<div class="icon">
+								<i class="fa fa-cart-plus"></i>
+							</div>
+							<a th:href="@{/product/}">
+								<div class="s-report-title d-flex justify-content-between">
+									<h4 class="header-title mb-0" th:text="#{info.staff}">Sáº£n pháº©m</h4>
+									<p>5000</p>
+								</div>
+							</a>
+						</div>
+						<canvas id="coin_sales3" height="100"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- sales report area end -->
+		<div class="row">
+			<!-- <div class="col-xl-9 col-lg-8"> -->
+			<div class="col-xl-12 col-lg-12">
+				<div class="card">
+					<div class="card-body">
+						<div class="d-flex justify-content-between align-items-center">
+							<h4 class="header-title mb-0">Overview</h4>
+							<select class="custome-select border-0 pr-3">
+								<option selected>Last 24 Hours</option>
+								<option value="0">01 July 2018</option>
+							</select>
+						</div>
+						<div id="verview-shart"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- sales report area end -->
+		<div class="row">
+			<!-- <div class="col-xl-9 col-lg-8"> -->
+			<div class="col-xl-12 col-lg-12">
+				<div class="card">
+					<div class="card-body">
+						<div class="d-flex justify-content-between align-items-center">
+							<h4 class="header-title mb-0">Overview</h4>
+							<select class="custome-select border-0 pr-3">
+								<option selected>Last 24 Hours</option>
+								<option value="0">01 July 2018</option>
+							</select>
+						</div>
+						<div id="verview-shart"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- sales report area end -->
+		<div class="row">
+			<!-- <div class="col-xl-9 col-lg-8"> -->
+			<div class="col-xl-12 col-lg-12">
+				<div class="card">
+					<div class="card-body">
+						<div class="d-flex justify-content-between align-items-center">
+							<h4 class="header-title mb-0">Overview</h4>
+							<select class="custome-select border-0 pr-3">
+								<option selected>Last 24 Hours</option>
+								<option value="0">01 July 2018</option>
+							</select>
+						</div>
+						<div id="verview-shart"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<th:block th:replace="common/footer :: footer"></th:block>
+
+</body>
+</html>

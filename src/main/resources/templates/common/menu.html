@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="menu">
+	<div id="preloader">
+		<div class="loader"></div>
+	</div>
+	<div class="page-container">
+		<div class="sidebar-menu">
+			<div class="sidebar-header">
+				<div class="logo">
+					<h4>
+						<a style="color: white" th:text="ahuhu">Há»¯u Duáº§n Lab 2</a>
+					</h4>
+				</div>
+			</div>
+			<div class="main-menu">
+				<div class="menu-inner">
+					<nav>
+						<ul class="metismenu" id="menu">
+
+							<li class="active"><a href="javascript:void(0)"
+								aria-expanded="true"><i class="ti-dashboard"></i><span th:text="#{menu.dashboard}">dashboard</span></a>
+							</li>
+
+							<li><a href="javascript:void(0)" aria-expanded="true"><i class="fas fa-address-card"></i> <span th:text="#{info.depart}">Error</span></a>
+								<ul class="collapse">
+									<li><a th:href="@{/depart/add-depart}" th:text="#{add.depart}">Error 404</a></li>
+									<li><a th:href="@{/depart/}" th:text="#{list.depart}">Error 403</a></li>
+								</ul></li>
+
+							<li><a href="javascript:void(0)" aria-expanded="true"><i
+									class="fa fa-table"></i> <span th:text="#{info.record}">Tables</span></a>
+								<ul class="collapse">
+									<li><a th:href="@{/record/add-record}" th:text="#{add.record}">basic table</a></li>
+									<li><a th:href="@{/record/}" th:text="#{list.record}">table layout</a></li>
+								</ul></li>
+
+							<li class=""><a href="javascript:void(0)"
+								aria-expanded="false"><i class="ti-palette"></i><span th:text="#{info.staff}">UI
+										Features</span></a>
+								<ul class="collapse" style="height: 0px;">
+									<li><a th:href="@{/staff/add-staff}" th:text="#{add.staff}">Accordion</a></li>
+									<li><a th:href="@{/staff/}" th:text="#{list.staff}">Alert</a></li>
+								</ul></li>
+
+							<li class=""><a href="javascript:void(0)"
+								aria-expanded="false"><i class="fas fa-users"></i><span th:text="#{info.user}">icons</span></a>
+								<ul class="collapse" style="height: 0px;">
+									<li><a th:href="@{/user/add-user}" th:text="#{add.user}">fontawesome icons</a></li>
+									<li><a th:href="@{/user/}" th:text="#{list.user}">themify icons</a></li>
+								</ul></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+</th:block>
+</html>
