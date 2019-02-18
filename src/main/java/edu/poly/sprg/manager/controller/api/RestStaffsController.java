@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -90,6 +91,89 @@ public class RestStaffsController {
 			return responseEntity;
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	@GetMapping(value = "/delete-staff", produces = { MimeTypeUtils.APPLICATION_JSON_VALUE })
+	public ResponseEntity<List<StaffsDTO>> deleteStaffsAndShowPaging(Model model,
+			@RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
+			@RequestParam(value = "id", required = false, defaultValue = "0") int id) {
+
+				staffsService.delete(staffsService.getOne(id));
+
+		PageRequest pageRequest = new PageRequest(pageNumber, 4);
+		Page<Staffs> staffs = staffsService.findAll(pageRequest);
+
+		try {
+			List<StaffsDTO> staffsDTOs = new ArrayList<>();
+			ResponseEntity<List<StaffsDTO>> responseEntity = new ResponseEntity<>(staffsDTOs, HttpStatus.OK);
+
+			for (Staffs staff : staffs.getContent()) {
+				StaffsDTO dto = new StaffsDTO();
+				dto.setId(staff.getId());
+				dto.setBirthDay(staff.getBirthDay());
+				dto.setDeparts(new DepartsDTO(staff.getDeparts().getId(), staff.getDeparts().getName()));
+				dto.setEmail(staff.getEmail());
+				dto.setGender(staff.isGender());
+				dto.setName(staff.getName());
+				dto.setNotes(staff.getNotes());
+				dto.setPhone(staff.getPhone());
+				dto.setPhoto(staff.getPhoto());
+				dto.setSalary(staff.getSalary());
+
+				staffsDTOs.add(dto);
+			}
+			model.addAttribute("data", staffs);
+
+			return responseEntity;
+		} catch (Exception e) {
+			return new ResponseEntity<List<StaffsDTO>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@GetMapping(value = "/get-staff", produces = { MimeTypeUtils.APPLICATION_JSON_VALUE })
+	public ResponseEntity<StaffsDTO> getStaff(Model model, @RequestParam("id") int id) {
+		try {
+			Staffs staff = staffsService.getOne(id);
+
+			StaffsDTO dto = new StaffsDTO();
+			dto.setId(staff.getId());
+			dto.setBirthDay(staff.getBirthDay());
+			dto.setDeparts(new DepartsDTO(staff.getDeparts().getId(), staff.getDeparts().getName()));
+			dto.setEmail(staff.getEmail());
+			dto.setGender(staff.isGender());
+			dto.setName(staff.getName());
+			dto.setNotes(staff.getNotes());
+			dto.setPhone(staff.getPhone());
+			dto.setPhoto(staff.getPhoto());
+			dto.setSalary(staff.getSalary());
+
+			ResponseEntity<StaffsDTO> responseEntity = new ResponseEntity<>(dto, HttpStatus.OK);
+			return responseEntity;
+
+		} catch (Exception e) {
+			return new ResponseEntity<StaffsDTO>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@GetMapping(value = "/getLang", produces = { MimeTypeUtils.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Integer> getLang(HttpServletRequest request) {
+		try {
+			// 1 is vietnamese
+			int value = 1;
+
+			Locale locale = (Locale) request.getSession().getAttribute("URL_LOCALE_ATTRIBUTE_NAME");
+			if (locale == null || locale == Locale.ENGLISH) {
+				locale = Locale.ENGLISH;
+				value = 0;
+				// 0 is english
+			}
+			ResponseEntity<Integer> responseEntity = new ResponseEntity<>(value, HttpStatus.OK);
+
+			return responseEntity;
+		} catch (Exception e) {
+			return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
 		}
 	}
 }

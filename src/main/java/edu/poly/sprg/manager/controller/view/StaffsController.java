@@ -42,18 +42,16 @@ public class StaffsController {
 	}
 
 	@PostMapping("/add-staff")
-	public String addStaff(HttpServletRequest request, Model model, @ModelAttribute("staff") StaffsDTO staffsDTO) {
+	public String addStaff(HttpServletRequest request, Model model, @ModelAttribute("staff") StaffsDTO staffsDTO,
+			@RequestParam(value = "photoHistory", required = false) String photoHistory) {
 
-		return this.saveOrUpdate(request, model, staffsDTO, "/add-staff");
+		return this.saveOrUpdate(request, model, staffsDTO, "/add-staff", photoHistory);
 	}
 
+	@SuppressWarnings("deprecation")
 	@GetMapping("/")
-	public String listStaffs(Model model,
-			@RequestParam(value = "page", required = false) Optional<Integer> pageNumber) {
-
-		@SuppressWarnings("deprecation")
+	public String listStaffs(Model model, @RequestParam(value = "page", required = false) Optional<Integer> pageNumber) {
 		PageRequest pageRequest = new PageRequest(pageNumber.orElse(0), 4);
-		model.addAttribute("listStaff", staffsService.findAll(pageRequest));
 		model.addAttribute("pages", staffsService.findAll(pageRequest));
 
 		return "staffs/listStaffs";
@@ -73,7 +71,6 @@ public class StaffsController {
 		staffsDTO.setPhone(staff.getPhone());
 		staffsDTO.setSalary(staff.getSalary());
 		staffsDTO.setPhoto(staff.getPhoto());
-		;
 
 		model.addAttribute("staff", staffsDTO);
 		model.addAttribute("listDepart", departsService.findAll());
@@ -82,11 +79,13 @@ public class StaffsController {
 	}
 
 	@PostMapping("/update-staff")
-	public String updateStaff(HttpServletRequest request, Model model, @ModelAttribute("staff") StaffsDTO staffsDTO) {
-		return this.saveOrUpdate(request, model, staffsDTO, "/");
+	public String updateStaff(HttpServletRequest request, Model model, @ModelAttribute("staff") StaffsDTO staffsDTO,
+			@RequestParam(value = "photoHistory", required = false) String photoHistory) {
+		return this.saveOrUpdate(request, model, staffsDTO, "/", photoHistory);
 	}
 
-	public String saveOrUpdate(HttpServletRequest request, Model model, StaffsDTO staffsDTO, String page) {
+	public String saveOrUpdate(HttpServletRequest request, Model model, StaffsDTO staffsDTO, String page,
+			String photoHistory) {
 		Staffs staff = new Staffs();
 		staff.setId(staffsDTO.getId());
 		staff.setBirthDay(staffsDTO.getBirthDay());
@@ -97,13 +96,42 @@ public class StaffsController {
 		staff.setNotes(staffsDTO.getNotes());
 		staff.setPhone(staffsDTO.getPhone());
 		staff.setSalary(staffsDTO.getSalary());
-		
-		MultipartFile file = staffsDTO.getFile();
-		String name = file.getOriginalFilename();
-		
+
+		String name;
+		try {
+			MultipartFile file = staffsDTO.getFile();
+			name = file.getOriginalFilename();
+			if (name.equals("") || name.isEmpty()) {
+				name = photoHistory;
+			}
+		} catch (Exception e) {
+			name = photoHistory;
+		}
+
 		staff.setPhoto(name);
 		staffsService.save(staff);
 
 		return "redirect:/staff" + page;
+	}
+
+	@GetMapping("/view-staff/{id}")
+	public String viewStaff(Model model, @PathVariable int id) {
+		Staffs staff = staffsService.getOne(id);
+		StaffsDTO staffsDTO = new StaffsDTO();
+		staffsDTO.setId(staff.getId());
+		staffsDTO.setBirthDay(staff.getBirthDay());
+		staffsDTO.setDeparts(new DepartsDTO(staff.getDeparts().getId(), staff.getDeparts().getName()));
+		staffsDTO.setEmail(staff.getEmail());
+		staffsDTO.setGender(staff.isGender());
+		staffsDTO.setName(staff.getName());
+		staffsDTO.setNotes(staff.getNotes());
+		staffsDTO.setPhone(staff.getPhone());
+		staffsDTO.setSalary(staff.getSalary());
+		staffsDTO.setPhoto(staff.getPhoto());
+		;
+
+		model.addAttribute("staff", staffsDTO);
+
+		return "staffs/viewStaffs";
 	}
 }

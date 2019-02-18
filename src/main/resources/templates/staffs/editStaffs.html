@@ -73,6 +73,7 @@
 
 							<label for="exampleFormControlFile1"
 								th:text="#{form.staff.photo}">Example file input</label>
+									<input type="hidden" name="photoHistory" id="photoHistory" th:value="${staff.photo}"/>
 									<div id="photoDisplay">
 										<img th:src="@{/upload/} + ${staff.photo}"
 											style="height: 150px; width: 150px;" /> 
