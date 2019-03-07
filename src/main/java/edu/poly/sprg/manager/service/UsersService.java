@@ -1,15 +1,20 @@
 package edu.poly.sprg.manager.service;
 
-import edu.poly.sprg.manager.entity.Users;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.List;
-import java.util.Optional;
+import edu.poly.sprg.manager.entity.Users;
 
 public interface UsersService {
+	
+	UserDetails findByUsername(String username);
+	
     List<Users> findAll();
 
     List<Users> findAll(Sort sort);

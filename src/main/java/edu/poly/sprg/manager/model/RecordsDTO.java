@@ -2,10 +2,14 @@ package edu.poly.sprg.manager.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class RecordsDTO {
     private int id;
     private boolean type;
     private String reason;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
     private StaffsDTO staffs;
 

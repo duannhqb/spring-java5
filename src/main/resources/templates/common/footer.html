@@ -201,7 +201,6 @@
 	<script th:src="@{/js/jquery.slimscroll.min.js}"></script>
 	<script th:src="@{/js/jquery.slicknav.min.js}"></script>
 	<script th:src="@{/js/bootstrap-datepicker.min.js}"></script>
-	<script th:src="@{/js/custom-staff.js}"></script>
 
 	<!-- 
 	<script th:src="@{/webjars/jquery/3.3.1-1/jquery.min.js}"></script>
@@ -233,9 +232,20 @@
 	<script th:src="@{/js/plugins.js}"></script>
 	<script th:src="@{/js/scripts.js}"></script>
 
+	<script th:src="@{/js/custom-staff.js}"></script>
+	<script th:src="@{/js/custom-record.js}"></script>
+	<script th:src="@{/js/custom-user.js}"></script>
+	<script th:src="@{/js/custom-depart.js}"></script>
+	<script th:src="@{/js/custom-other.js}"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 	<script>
-    $('#sandbox-container input').datepicker({
-    });
+		setTimeout(function() {
+			$("#successAdd").remove();
+		}, 6000);
+
+		//$('#sandbox-container input').datepicker({
+		//});
 	</script>
 
 </th:block>

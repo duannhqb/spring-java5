@@ -1,7 +1,7 @@
 // process jquery ajax from UI to controller and opposite
 
 //staff
-$("body").on("click", ".page-link", function(){
+$("body").on("click", ".page-link-staff", function(){
 	var page = $(this).data("columns");
 	
 	$.ajax({
@@ -105,7 +105,12 @@ $("body").on("click", ".btn-idstaff", function(){
 				$("#name").val(staff.name);
 				$("#phone").val(staff.phone);
 				$("#email").val(staff.email);
+				
+//				jQuery.format.date(staff.birthDay, "dd/MM/yyyy")
+				
 				$("#birthday").val(staff.birthDay);
+//				$("#birthday").val($.format.date(staff.birthDay, "dd/MM/yyyy"));
+				$("#level").val(staff.level);
 				
 				if(lang===1){
 					if(staff.gender===true){

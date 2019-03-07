@@ -10,51 +10,54 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DepartsService {
-    List<Departs> findAll();
 
-    List<Departs> findAll(Sort sort);
+	<S extends Departs> boolean exists(Example<S> example);
 
-    List<Departs> findAllById(Iterable<Integer> integers);
+	<S extends Departs> long count(Example<S> example);
 
-    <S extends Departs> List<S> saveAll(Iterable<S> entities);
+	<S extends Departs> Page<S> findAll(Example<S> example, Pageable pageable);
 
-    void flush();
+	<S extends Departs> Optional<S> findOne(Example<S> example);
 
-    <S extends Departs> S saveAndFlush(S entity);
+	void deleteAll();
 
-    void deleteInBatch(Iterable<Departs> entities);
+	void deleteAll(Iterable<? extends Departs> entities);
 
-    void deleteAllInBatch();
+	void delete(Departs entity);
 
-    Departs getOne(Integer integer);
+	void deleteById(Integer integer);
 
-    <S extends Departs> List<S> findAll(Example<S> example);
+	long count();
 
-    <S extends Departs> List<S> findAll(Example<S> example, Sort sort);
+	boolean existsById(Integer integer);
 
-    Page<Departs> findAll(Pageable pageable);
+	Optional<Departs> findById(Integer integer);
 
-    <S extends Departs> S save(S entity);
+	<S extends Departs> S save(S entity);
 
-    Optional<Departs> findById(Integer integer);
+	Page<Departs> findAll(Pageable pageable);
 
-    boolean existsById(Integer integer);
+	<S extends Departs> List<S> findAll(Example<S> example, Sort sort);
 
-    long count();
+	<S extends Departs> List<S> findAll(Example<S> example);
 
-    void deleteById(Integer integer);
+	Departs getOne(Integer integer);
 
-    void delete(Departs entity);
+	void deleteAllInBatch();
 
-    void deleteAll(Iterable<? extends Departs> entities);
+	void deleteInBatch(Iterable<Departs> entities);
 
-    void deleteAll();
+	<S extends Departs> S saveAndFlush(S entity);
 
-    <S extends Departs> Optional<S> findOne(Example<S> example);
+	void flush();
 
-    <S extends Departs> Page<S> findAll(Example<S> example, Pageable pageable);
+	<S extends Departs> List<S> saveAll(Iterable<S> entities);
 
-    <S extends Departs> long count(Example<S> example);
+	List<Departs> findAllById(Iterable<Integer> integers);
 
-    <S extends Departs> boolean exists(Example<S> example);
+	List<Departs> findAll(Sort sort);
+
+	List<Object[]> getPoint();
+
+	List<Departs> findAll();
 }

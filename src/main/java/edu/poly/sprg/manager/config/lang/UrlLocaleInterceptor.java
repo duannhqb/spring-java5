@@ -1,4 +1,4 @@
-package edu.poly.sprg.manager.langConfig;
+package edu.poly.sprg.manager.config.lang;
 
 import java.util.Locale;
 

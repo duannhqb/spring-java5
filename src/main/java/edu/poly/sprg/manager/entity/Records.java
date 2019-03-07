@@ -1,6 +1,9 @@
 package edu.poly.sprg.manager.entity;
 
 import javax.persistence.*;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 @Entity
@@ -10,6 +13,8 @@ public class Records {
     private int id;
     private boolean type;
     private String reason;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     //    Một nhân viên có nhiều đánh giá, nhiều đánh giá thuộc một nhân viên

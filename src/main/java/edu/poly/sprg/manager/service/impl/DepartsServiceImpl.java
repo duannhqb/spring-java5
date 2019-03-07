@@ -27,6 +27,11 @@ public class DepartsServiceImpl implements DepartsService {
     }
 
     @Override
+	public List<Object[]> getPoint() {
+		return departRepository.getPoint();
+	}
+
+	@Override
     public List<Departs> findAll(Sort sort) {
         return departRepository.findAll(sort);
     }

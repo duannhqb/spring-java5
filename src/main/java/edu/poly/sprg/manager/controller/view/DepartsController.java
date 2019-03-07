@@ -3,6 +3,7 @@ package edu.poly.sprg.manager.controller.view;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import edu.poly.sprg.manager.entity.Departs;
 import edu.poly.sprg.manager.model.DepartsDTO;
 import edu.poly.sprg.manager.service.DepartsService;
+import edu.poly.sprg.manager.validation.DepartsValidation;
 
 @Controller
 @RequestMapping("/depart")
@@ -20,6 +22,9 @@ public class DepartsController {
 	@Autowired
 	private DepartsService departsService;
 
+	@Autowired
+	private DepartsValidation departsValidation;
+	
 	@GetMapping("/add-depart")
 	public String addDepart(Model model) {
 		model.addAttribute("depart", new DepartsDTO());
@@ -28,12 +33,19 @@ public class DepartsController {
 	}
 
 	@PostMapping("/add-depart")
-	public String addDepart(Model model, @ModelAttribute("depart") DepartsDTO departsDTO) {
+	public String addDepart(Model model, @ModelAttribute("depart") DepartsDTO departsDTO, BindingResult bindingResult) {
+		departsValidation.validate(departsDTO, bindingResult);
+		
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("depart", departsDTO);
+			
+			return "departs/addDeparts";
+		}
+		
 		Departs depart = new Departs();
 		depart.setName(departsDTO.getName());
 
 		departsService.save(depart);
-
 		model.addAttribute("msg", "OK");
 
 		return "redirect:/depart/add-depart";
@@ -63,7 +75,15 @@ public class DepartsController {
 	}
 
 	@PostMapping("/update-depart")
-	public String updateDepart(Model model, @ModelAttribute("depart") DepartsDTO departsDTO) {
+	public String updateDepart(Model model, @ModelAttribute("depart") DepartsDTO departsDTO, BindingResult bindingResult) {
+		departsValidation.validate(departsDTO, bindingResult);
+		
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("depart", departsDTO);
+			
+			return "departs/editDeparts";
+		}
+		
 		Departs departs = new Departs();
 		departs.setId(departsDTO.getId());
 		departs.setName(departsDTO.getName());
@@ -79,4 +99,5 @@ public class DepartsController {
 
 		return "redirect:/depart/";
 	}
+	
 }

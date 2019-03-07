@@ -1,4 +1,4 @@
-package edu.poly.sprg.manager.langConfig;
+package edu.poly.sprg.manager.config.lang;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;

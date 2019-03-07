@@ -1,19 +1,153 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <title>Thymeleaf Template</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/webjars/font-awesome/5.6.3/css/all.css}">
-
-</head>
+<!doctype html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="common/head :: head"></th:block>
 <body>
 
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script th:src="@{/webjars/jquery/3.3.1-1/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/1.14.6/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+	<th:block th:replace="common/menu :: menu"></th:block>
+	<th:block th:replace="common/header :: header"></th:block>
+	
+	<!-- page title area start -->
+	<div class="page-title-area" style="height: 50px; padding-top: 10px">
+		<div class="row align-items-center">
+			<div class="breadcrumbs-area clearfix">
+				<ul class="breadcrumbs pull-left ml-4">
+					<li><a th:href="@{/}" th:text="#{info.record}"></a></li>
+					<li><span th:text="#{list.record}">Bảng điều khiển</span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="main-content-inner">
+		<div class="col-12 mt-5">
+			<div class="card">
+				<div class="card-body">
+					<h4 class="header-title" th:text="#{list.record}">...</h4>
+					<div class="row">
+						<div class="col-md-10"></div>
+						<a href="#modal" role="button"
+							class="col-md-2 btn btn-outline-primary mb-3"
+							style="margin-top: -50px;" data-toggle="modal"><i
+							class="fas fa-plus"> <span th:text="#{add.record}"></span></i></a>
+					</div>
+
+					<div class="modal" id="modal" tabindex="-1" role="dialog">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" th:text="#{add.record}">Modal
+										title</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="modal-body mt-2">
+										<div id="msg" class="form-group"></div>
+
+										<div class="form-group">
+											<label for="staffId" th:text="#{table.staff.name}">Example
+												select</label> <select class="form-control" style="height: 45px;"
+												id="staffId">
+												<th:block th:each="staff : ${staffs}">
+													<option th:value="${staff.id}" th:text="${staff.name}"></option>
+												</th:block>
+											</select>
+											<div>
+												<small id="staffAdd" class="text-danger form-text"></small>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label for="type" th:text="#{table.record.type}">Example
+												select</label> <select class="form-control" style="height: 45px;"
+												id="type">
+												<option th:value="true" th:text="#{table.record.type.true}">1</option>
+												<option th:value="false"
+													th:text="#{table.record.type.false}">1</option>
+											</select>
+											<div>
+												<small id="typeAdd" class="text-danger form-text"></small>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label for="reason" th:text="#{table.record.reason}"></label>
+											<input type="text" class="form-control" id="reason" value="">
+											<div>
+												<small id="reasonAdd" class="text-danger form-text"></small>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">Close</button>
+									<div class="btn btn-primary" id="btnAddRecord"
+										th:text="#{add.record}">Save changes</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="single-table">
+						<div class="table-responsive">
+							<table class="table table-hover progress-table text-center"
+								id="tableStaff">
+								<thead class="text-uppercase">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col" th:text="#{table.staff.name}"></th>
+										<th scope="col" th:text="#{table.record.type}"></th>
+										<th scope="col" th:text="#{table.record.reason}"></th>
+										<th scope="col" th:text="#{table.record.date}"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<th:block th:each="record : ${pages.content}">
+										<tr>
+											<td scope="row" style="padding-top: 20px;"><span
+												class="status-p bg-primary" th:text="${record.id}"></span></td>
+											<td th:text="${record.staffs.name}"
+												style="padding-top: 20px;"></td>
+											<td th:text="#{table.record.type.true}"
+												th:if="${record.type==true}" style="padding-top: 20px;"></td>
+											<td th:text="#{table.record.type.false}"
+												th:if="${record.type==false}" style="padding-top: 20px;"></td>
+											<td th:text="${record.reason}" style="padding-top: 20px;"></td>
+											<td th:text="${record.date}" style="padding-top: 20px;"></td>
+										</tr>
+									</th:block>
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+					<div class="header-footer" id="indexPaging"
+						th:data-page="${pages.number}">
+						<nav aria-label="Page navigation example">
+							<ul class="pagination">
+								<li class="page-item"><a class="page-link page-link-record"
+									th:data-columns="0" href="javascript:void(0)"><span
+										aria-hidden='true'>&laquo;</span></a></li>
+								<li class="page-item"
+									th:each="no : ${#numbers.sequence(0, pages.totalPages-1)}">
+									<a class="page-link page-paging page-link-record"
+									th:data-columns="${no}" th:inline="text">[[${no+1}]]</a>
+								</li>
+								<li class="page-item"><a
+									class="page-link page-max-paging page-link-record"
+									th:data-columns="${pages.totalPages-1}"><span
+										aria-hidden='true'>&raquo;</span></a></li>
+							</ul>
+						</nav>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<th:block th:replace="common/footer :: footer"></th:block>
 </body>
 </html>

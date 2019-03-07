@@ -3,6 +3,7 @@ package edu.poly.sprg.manager.validation;
 import edu.poly.sprg.manager.model.DepartsDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 @Component
@@ -15,6 +16,6 @@ public class DepartsValidation implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-
+    	ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "validator.depart.name");
     }
 }

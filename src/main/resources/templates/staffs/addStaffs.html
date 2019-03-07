@@ -6,48 +6,37 @@
 	<th:block th:replace="common/menu :: menu"></th:block>
 	<th:block th:replace="common/header :: header"></th:block>
 
-
 	<!-- page title area start -->
-	<div class="page-title-area">
+	<div class="page-title-area" style="height: 50px; padding-top: 10px">
 		<div class="row align-items-center">
-			<div class="col-sm-6">
-				<div class="breadcrumbs-area clearfix">
-					<!-- <h4 class="page-title pull-left">Báº£ng Ä‘iá»�u khiá»ƒn</h4>  -->
-					<ul class="breadcrumbs pull-left ml-4">
-						<li><a th:href="@{/staff/}" th:text="#{info.staff}">Trang
-								chủ</a></li>
-						<li><span th:text="#{add.staff}">Bảng điều khiển</span></li>
-					</ul>
-				</div>
-			</div>
-			<div class="col-sm-6 clearfix">
-				<div class="user-profile pull-right">
-					<h4 class="user-name dropdown-toggle" data-toggle="dropdown">
-						Huu Duan <i class="fa fa-angle-down"></i>
-					</h4>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#">Message</a> <a
-							class="dropdown-item" href="#">Settings</a> <a
-							class="dropdown-item" href="#">Log Out</a>
-					</div>
-				</div>
+			<div class="breadcrumbs-area clearfix">
+				<ul class="breadcrumbs pull-left ml-4">
+					<li><a th:href="@{/}" th:text="#{info.staff}"></a></li>
+					<li><span th:text="#{add.staff}">Bảng điều khiển</span></li>
+				</ul>
 			</div>
 		</div>
 	</div>
 
 	<div class="main-content-inner">
-
-
 		<div class="col-12 mt-5">
 			<div class="card">
 				<div class="card-body">
+					<th:block th:if="${not #strings.isEmpty(msg)}">
+						<div id="successAdd" th:text="#{add.staff.success}"
+							class="alert alert-success" role="alert">A simple success
+							alert—check it out!</div>
+					</th:block>
+
 					<form th:object="${staff}" th:action="@{/staff/add-staff}"
 						method="post" enctype="multipart/form-data">
 						<div class="form-group">
 							<label for="example-text-input" class="col-form-label"
 								th:text="#{form.staff.name}">Tên sản phẩm</label> <input
 								class="form-control" type="text" th:field="*{name}"
-								id="example-text-input">
+								id="example-text-input"> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
 						</div>
 
 						<div class="form-group">
@@ -55,7 +44,6 @@
 								th:text="#{form.staff.gender}">Example select</label> <select
 								class="form-control" style="height: 45px;" th:field="*{gender}"
 								id="exampleFormControlSelect1">
-								<option th:text="#{form.staff.gender.top}" value="0"></option>
 								<option th:text="#{form.staff.gender.male}" th:value="true"></option>
 								<option th:text="#{form.staff.gender.female}" th:value="false"></option>
 							</select>
@@ -64,19 +52,19 @@
 						<div class="form-group" id="sandbox-container">
 							<label for="datepicker" class="col-form-label"
 								th:text="#{form.staff.birthday}">Tên sản phẩm</label> <input
-								class="form-control" type="text" th:field="*{birthDay}"
-								id="datepicker">
+								class="form-control" type="date" th:field="*{{birthDay}}"
+								id="datepicker"> <small class="form-text text-danger"
+								th:if="${#fields.hasErrors('birthDay')}" th:errors="*{birthDay}"></small>
 						</div>
 
 						<div class="form-group">
 
 							<label for="exampleFormControlFile1"
-								th:text="#{form.staff.photo}">Example file input</label>
-								<input type="hidden" name="photoHistory" id="photoHistory" value="avatar-default.jpg"/>
-								<div id="photoDisplay">
-										
-								</div>
-								
+								th:text="#{form.staff.photo}">Example file input</label> <input
+								type="hidden" name="photoHistory" id="photoHistory"
+								value="avatar-default.jpg" />
+							<div id="photoDisplay"></div>
+
 							<div>
 								<a href="#photoModal"
 									class="btn btn-outline-primary btn-sm mt-2" data-toggle="modal"
@@ -97,10 +85,9 @@
 											</div>
 											<div class="modal-body">
 												<div class="form-group">
-													<label for="fileImage"
-														th:text="#{form.staff.photo}">Example file input</label> <input
-														type="file" class="form-control-file" th:field="*{file}"
-														id="fileImage">
+													<label for="fileImage" th:text="#{form.staff.photo}">Example
+														file input</label> <input type="file" class="form-control-file"
+														th:field="*{file}" id="fileImage">
 												</div>
 											</div>
 											<div class="modal-footer">
@@ -113,27 +100,43 @@
 									</div>
 								</div>
 							</div>
+							<small class="form-text text-success" th:text="#{photo.null}"></small>
 						</div>
 
 						<div class="form-group">
 							<label for="example-text-input" class="col-form-label"
-								th:text="#{form.staff.email}">Tên sản phẩm</label> <input
+								th:text="#{form.staff.level}">Tên sản phẩm</label> <input
+								class="form-control" type="text" th:field="*{level}"
+								id="example-text-input"> <small
+								th:if="${#fields.hasErrors('level')}" th:errors="*{level}"
+								class="form-text text-danger"></small>
+						</div>
+
+						<div class="form-group">
+							<label for="example-text-input" class="col-form-label"
+								th:text="#{form.staff.email}"></label> <input
 								class="form-control" type="text" th:field="*{email}"
-								id="example-text-input">
+								id="example-text-input"> <small
+								th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+								class="form-text text-danger"></small>
 						</div>
 
 						<div class="form-group">
 							<label for="example-text-input" class="col-form-label"
-								th:text="#{form.staff.phone}">Tên sản phẩm</label> <input
+								th:text="#{form.staff.phone}"></label> <input
 								class="form-control" type="text" th:field="*{phone}"
-								id="example-text-input">
+								id="example-text-input"> <small
+								th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"
+								class="form-text text-danger"></small>
 						</div>
 
 						<div class="form-group">
 							<label for="example-text-input" class="col-form-label"
 								th:text="#{form.staff.salary}">Tên sản phẩm</label> <input
 								class="form-control" type="text" th:field="*{salary}"
-								id="example-text-input">
+								id="example-text-input"> <small
+								th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"
+								class="form-text text-danger"></small>
 						</div>
 
 						<div class="form-group">
@@ -148,7 +151,6 @@
 								th:text="#{form.staff.depart}">Example select</label> <select
 								class="form-control" style="height: 45px;"
 								th:field="*{departs.id}" id="exampleFormControlSelect1">
-								<option th:text="#{form.staff.depart.top}" value="0"></option>
 								<th:block th:each="depart : ${listDepart}">
 									<option th:text="${depart.name}" th:value="${depart.id}"></option>
 								</th:block>

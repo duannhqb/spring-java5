@@ -10,51 +10,58 @@ import java.util.List;
 import java.util.Optional;
 
 public interface StaffsService {
-    List<Staffs> findAll();
 
-    List<Staffs> findAll(Sort sort);
+	<S extends Staffs> boolean exists(Example<S> example);
 
-    List<Staffs> findAllById(Iterable<Integer> integers);
+	<S extends Staffs> long count(Example<S> example);
 
-    <S extends Staffs> List<S> saveAll(Iterable<S> entities);
+	<S extends Staffs> Page<S> findAll(Example<S> example, Pageable pageable);
 
-    void flush();
+	<S extends Staffs> Optional<S> findOne(Example<S> example);
 
-    <S extends Staffs> S saveAndFlush(S entity);
+	void deleteAll();
 
-    void deleteInBatch(Iterable<Staffs> entities);
+	void deleteAll(Iterable<? extends Staffs> entities);
 
-    void deleteAllInBatch();
+	void delete(Staffs entity);
 
-    Staffs getOne(Integer integer);
+	void deleteById(Integer integer);
 
-    <S extends Staffs> List<S> findAll(Example<S> example);
+	long count();
 
-    <S extends Staffs> List<S> findAll(Example<S> example, Sort sort);
+	boolean existsById(Integer integer);
 
-    Page<Staffs> findAll(Pageable pageable);
+	Optional<Staffs> findById(Integer integer);
 
-    <S extends Staffs> S save(S entity);
+	<S extends Staffs> S save(S entity);
 
-    Optional<Staffs> findById(Integer integer);
+	Page<Staffs> findAll(Pageable pageable);
 
-    boolean existsById(Integer integer);
+	<S extends Staffs> List<S> findAll(Example<S> example, Sort sort);
 
-    long count();
+	<S extends Staffs> List<S> findAll(Example<S> example);
 
-    void deleteById(Integer integer);
+	Staffs getOne(Integer integer);
 
-    void delete(Staffs entity);
+	void deleteAllInBatch();
 
-    void deleteAll(Iterable<? extends Staffs> entities);
+	void deleteInBatch(Iterable<Staffs> entities);
 
-    void deleteAll();
+	<S extends Staffs> S saveAndFlush(S entity);
 
-    <S extends Staffs> Optional<S> findOne(Example<S> example);
+	void flush();
 
-    <S extends Staffs> Page<S> findAll(Example<S> example, Pageable pageable);
+	<S extends Staffs> List<S> saveAll(Iterable<S> entities);
 
-    <S extends Staffs> long count(Example<S> example);
+	List<Staffs> findAllById(Iterable<Integer> integers);
 
-    <S extends Staffs> boolean exists(Example<S> example);
+	List<Staffs> findAll(Sort sort);
+
+	List<Staffs> findAll();
+
+	List<String> seachStaff(String input);
+
+	List<Object[]> getPoint();
+	
+	List<Object[]> getStaff();
 }

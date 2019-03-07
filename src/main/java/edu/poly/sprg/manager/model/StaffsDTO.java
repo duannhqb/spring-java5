@@ -3,17 +3,30 @@ package edu.poly.sprg.manager.model;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 public class StaffsDTO {
 	private int id;
 	private String name;
 	private boolean gender;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birthDay;
+	
 	private String photo;
 	private String email;
 	private String phone;
 	private int salary;
+	private int level;
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
 	private MultipartFile file;
 	private String notes;
 	private DepartsDTO departs;
@@ -21,6 +34,25 @@ public class StaffsDTO {
 
 	public StaffsDTO() {
 
+	}
+
+	public StaffsDTO(int id) {
+		super();
+		this.id = id;
+	}
+
+	public StaffsDTO(int id, String name, boolean gender, Date birthDay, String photo, String email, String phone,
+			int salary, int level) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.gender = gender;
+		this.birthDay = birthDay;
+		this.photo = photo;
+		this.email = email;
+		this.phone = phone;
+		this.salary = salary;
+		this.level = level;
 	}
 
 	public MultipartFile getFile() {

@@ -1,120 +1,146 @@
 package edu.poly.sprg.manager.entity;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 public class Staffs {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String name;
-    private boolean gender;
-    private Date birthDay;
-    private String photo;
-    private String email;
-    private String phone;
-    private int salary;
-    private String notes;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	private String name;
+	private boolean gender;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date birthDay;
+	
+	private String photo;
+	private String email;
+	private String phone;
+	private int salary;
+	private String notes;
+	private int level;
 
-    //    nhiều nhân viên thuộc về một phòng ban
-    @ManyToOne
-    @JoinColumn(name = "departId")
-    private Departs departs;
+	public int getLevel() {
+		return level;
+	}
 
-    @OneToMany(mappedBy = "staffs", fetch = FetchType.LAZY)
-    private List<Records> recordsList;
+	public void setLevel(int level) {
+		this.level = level;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	// nhiều nhân viên thuộc về một phòng ban
+	@ManyToOne
+	@JoinColumn(name = "departId")
+	private Departs departs;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public Staffs(int id) {
+		this.id = id;
+	}
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+	@OneToMany(mappedBy = "staffs", fetch = FetchType.LAZY)
+	private List<Records> recordsList;
 
-    public void setBirthDay(Date birthDay) {
-        this.birthDay = birthDay;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setDeparts(Departs departs) {
-        this.departs = departs;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
-    public void setGender(boolean gender) {
-        this.gender = gender;
-    }
+	public void setBirthDay(Date birthDay) {
+		this.birthDay = birthDay;
+	}
 
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
+	public void setDeparts(Departs departs) {
+		this.departs = departs;
+	}
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
+	public void setGender(boolean gender) {
+		this.gender = gender;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
 
-    public String getPhone() {
-        return phone;
-    }
+	public void setSalary(int salary) {
+		this.salary = salary;
+	}
 
-    public Date getBirthDay() {
-        return birthDay;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public Departs getDeparts() {
-        return departs;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public int getSalary() {
-        return salary;
-    }
+	public String getPhone() {
+		return phone;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public Date getBirthDay() {
+		return birthDay;
+	}
 
-    public String getNotes() {
-        return notes;
-    }
+	public Departs getDeparts() {
+		return departs;
+	}
 
-    public String getPhoto() {
-        return photo;
-    }
+	public int getSalary() {
+		return salary;
+	}
 
-    public void setRecordsList(List<Records> recordsList) {
-        this.recordsList = recordsList;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public List<Records> getRecordsList() {
-        return recordsList;
-    }
+	public String getNotes() {
+		return notes;
+	}
 
-    public boolean isGender() {
-        return gender;
-    }
+	public String getPhoto() {
+		return photo;
+	}
 
-    public Staffs() {
+	public void setRecordsList(List<Records> recordsList) {
+		this.recordsList = recordsList;
+	}
 
-    }
+	public List<Records> getRecordsList() {
+		return recordsList;
+	}
+
+	public boolean isGender() {
+		return gender;
+	}
+
+	public Staffs() {
+
+	}
 }

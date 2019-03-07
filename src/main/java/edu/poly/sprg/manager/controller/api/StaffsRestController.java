@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import edu.poly.sprg.manager.entity.Staffs;
 import edu.poly.sprg.manager.model.DepartsDTO;
 import edu.poly.sprg.manager.model.StaffsDTO;
@@ -30,7 +33,7 @@ import edu.poly.sprg.manager.service.StaffsService;
 
 @RestController
 @RequestMapping("/api/v2")
-public class RestStaffsController {
+public class StaffsRestController {
 
 	@Autowired
 	private StaffsService staffsService;
@@ -59,6 +62,7 @@ public class RestStaffsController {
 				dto.setPhone(staff.getPhone());
 				dto.setPhoto(staff.getPhoto());
 				dto.setSalary(staff.getSalary());
+				dto.setLevel(staff.getLevel());
 
 				staffsDTOs.add(dto);
 			}
@@ -100,7 +104,7 @@ public class RestStaffsController {
 			@RequestParam(value = "page", required = false, defaultValue = "0") int pageNumber,
 			@RequestParam(value = "id", required = false, defaultValue = "0") int id) {
 
-				staffsService.delete(staffsService.getOne(id));
+		staffsService.delete(staffsService.getOne(id));
 
 		PageRequest pageRequest = new PageRequest(pageNumber, 4);
 		Page<Staffs> staffs = staffsService.findAll(pageRequest);
@@ -121,6 +125,7 @@ public class RestStaffsController {
 				dto.setPhone(staff.getPhone());
 				dto.setPhoto(staff.getPhoto());
 				dto.setSalary(staff.getSalary());
+				dto.setLevel(staff.getLevel());
 
 				staffsDTOs.add(dto);
 			}
@@ -148,6 +153,7 @@ public class RestStaffsController {
 			dto.setPhone(staff.getPhone());
 			dto.setPhoto(staff.getPhoto());
 			dto.setSalary(staff.getSalary());
+			dto.setLevel(staff.getLevel());
 
 			ResponseEntity<StaffsDTO> responseEntity = new ResponseEntity<>(dto, HttpStatus.OK);
 			return responseEntity;
@@ -176,4 +182,20 @@ public class RestStaffsController {
 			return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
 		}
 	}
+
+	@GetMapping("/search")
+	public ResponseEntity<String> doAutoComplete(@RequestParam("q") final String input) {
+		List<String> strings = staffsService.seachStaff(input);
+		ObjectMapper mapper = new ObjectMapper();
+		
+		String resp = "";
+		try {
+			resp = mapper.writeValueAsString(strings);
+			
+		} catch (JsonProcessingException e) {
+		}
+		
+		return new ResponseEntity<String>(resp, HttpStatus.OK);
+	}
+
 }
